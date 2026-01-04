@@ -6,6 +6,8 @@ import "./globals.css"
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
 
+import { Toaster } from "@/components/ui/sonner"
+
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
@@ -26,6 +28,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
+          <Toaster />
         </ThemeProvider>
         <Analytics />
       </body>

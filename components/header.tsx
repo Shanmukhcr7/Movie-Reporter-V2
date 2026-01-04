@@ -29,7 +29,7 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-6">
+            <nav className="hidden lg:flex items-center gap-4">
               <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
                 Home
               </Link>
@@ -73,11 +73,11 @@ export function Header() {
                 Polling
               </Link>
 
-              <Link href="/weekly-magazine" className="text-sm font-medium hover:text-primary transition-colors">
+              <Link href="/weekly-magazine" className="text-sm font-medium hover:text-primary transition-colors hidden xl:block">
                 Weekly Magazine
               </Link>
 
-              <Link href="/blogs" className="text-sm font-medium hover:text-primary transition-colors">
+              <Link href="/blogs" className="text-sm font-medium hover:text-primary transition-colors hidden xl:block">
                 Blogs
               </Link>
 
