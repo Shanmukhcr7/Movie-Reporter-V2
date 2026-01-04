@@ -39,10 +39,8 @@ export function HeroBanner() {
           limit(10), // Use limit here
         )
         const newsSnapshot = await getDocs(newsQuery)
-        console.log("HeroBanner: News snapshot size:", newsSnapshot.size);
         newsSnapshot.docs.forEach((doc, index) => {
           const data = doc.data()
-          if (index === 0) console.log("HeroBanner: Sample news data:", JSON.stringify(data, null, 2));
           items.push({
             id: doc.id,
             title: data.title,
@@ -61,7 +59,6 @@ export function HeroBanner() {
           limit(10), // Use limit here
         )
         const blogsSnapshot = await getDocs(blogsQuery)
-        console.log("HeroBanner: Blogs snapshot size:", blogsSnapshot.size);
         blogsSnapshot.docs.forEach((doc) => {
           const data = doc.data()
           items.push({
@@ -77,7 +74,6 @@ export function HeroBanner() {
 
         items.sort((a, b) => (b.publishedAt || 0) - (a.publishedAt || 0))
         setBanners(items.slice(0, 7))
-        console.log("HeroBanner: Total items:", items.length);
       } catch (error) {
         console.error("[v0] Error fetching banners:", error)
       }

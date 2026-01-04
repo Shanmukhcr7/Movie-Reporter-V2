@@ -60,7 +60,6 @@ export default function HomePage() {
           })
           .slice(0, 8)
 
-        console.log("HomePage: Processed latest movies:", releasedMovies.length)
         setLatestMovies(releasedMovies)
 
         // Fetch featured articles (news + blogs)
