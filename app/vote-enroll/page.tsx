@@ -16,6 +16,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { formatDistanceToNow } from "date-fns"
 import { Button } from "@/components/ui/button" // Assuming Button is available
+import { SectionCarousel } from "@/components/ui/section-carousel"
 
 interface Nominee {
   id: string
@@ -528,7 +529,7 @@ export default function VoteEnrollPage() {
                   )}
 
                   {isExpanded && (
-                    <div className="flex overflow-x-auto pb-6 -mx-4 px-4 gap-4 snap-x md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 md:mx-0 md:px-0 scrollbar-hide">
+                    <SectionCarousel className="md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible md:pb-0 md:mx-0 md:px-0 scrollbar-hide">
                       {category.nominees?.map((nominee: any) => {
                         const isVoted = userVote?.nomineeId === nominee.id
                         // Strict Lock: If any vote exists in this category, disable interactions for all
@@ -549,7 +550,7 @@ export default function VoteEnrollPage() {
                           </div>
                         )
                       })}
-                    </div>
+                    </SectionCarousel>
                   )}
                 </div>
               )

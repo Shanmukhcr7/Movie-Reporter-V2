@@ -29,40 +29,48 @@ export function VotingCard({ nominee, isVoted, onVote, onShare, onCustomVote, on
                 isVoted ? "border-primary bg-primary/5" : "border-border/50 bg-card/50"
             )}
         >
-            <div
-                className="relative aspect-[3/4] overflow-hidden bg-muted cursor-pointer"
-                onClick={() => {
-                    if (nominee.celebrityId) {
-                        window.location.href = `/celebrities?id=${nominee.celebrityId}` // Assuming client side router or direct link
-                    } else if (nominee.movieId) {
-                        // handle movie link
-                    }
-                }}
-            >
+            <div className="relative aspect-[3/4] overflow-hidden bg-muted">
                 {isOther ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 cursor-default">
                         <span className="text-4xl">✨</span>
                     </div>
                 ) : (
-                    <Image
-                        src={nominee.celebrity?.image || nominee.celebrity?.imageUrl || nominee.celebrity?.posterUrl || "/placeholder.svg"}
-                        alt={nominee.celebrity?.name || "Nominee"}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
+                    <Link href={`/celebrity/${nominee.celebrityId}`} className="block h-full w-full cursor-pointer">
+                        <Image
+                            src={nominee.celebrity?.image || nominee.celebrity?.imageUrl || nominee.celebrity?.posterUrl || "/placeholder.svg"}
+                            alt={nominee.celebrity?.name || "Nominee"}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                    </Link>
                 )}
 
                 {isVoted && (
-                    <div className="absolute top-3 right-3 bg-primary text-primary-foreground rounded-full p-2 animate-in zoom-in spin-in-90 duration-300">
+                    <div className="absolute top-3 right-3 bg-primary text-primary-foreground rounded-full p-2 animate-in zoom-in spin-in-90 duration-300 pointer-events-none">
                         <CheckCircle2 className="h-5 w-5" />
                     </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-12 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12 transform translate-y-2 group-hover:translate-y-0 transition-transform">
                     <h3 className="font-bold text-white text-lg line-clamp-1">
-                        {isOther ? "Other Choice" : nominee.celebrity?.name}
+                        {isOther ? (
+                            "Other Choice"
+                        ) : (
+                            <Link href={`/celebrity/${nominee.celebrityId}`} className="hover:text-primary transition-colors">
+                                {nominee.celebrity?.name}
+                            </Link>
+                        )}
                     </h3>
                     <p className="text-white/80 text-sm line-clamp-1">
-                        {isOther ? "Your Opinion" : nominee.movie?.title}
+                        {isOther ? (
+                            "Your Opinion"
+                        ) : nominee.movieId ? (
+                            <Link href={`/movie/${nominee.movieId}`} className="hover:text-primary transition-colors hover:underline">
+                                {nominee.movie?.title || "Unknown Movie"}
+                            </Link>
+                        ) : (
+                            nominee.movie?.title
+                        )}
                     </p>
                 </div>
             </div>
