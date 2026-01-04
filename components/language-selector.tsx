@@ -17,6 +17,10 @@ const LANGUAGES = [
     { code: "ta", name: "Tamil (தமிழ்)" },
     { code: "kn", name: "Kannada (ಕನ್ನಡ)" },
     { code: "ml", name: "Malayalam (മലയാളം)" },
+    { code: "gu", name: "Gujarati (ગુજરાતી)" },
+    { code: "mr", name: "Marathi (मराठी)" },
+    { code: "bn", name: "Bengali (বাংলা)" },
+    { code: "or", name: "Odia (ଓଡ଼ିଆ)" },
 ]
 
 export function LanguageSelector() {
@@ -25,23 +29,38 @@ export function LanguageSelector() {
 
     useEffect(() => {
         setMounted(true)
-        // Initialize Google Translate Script
-        const addScript = document.createElement("script")
-        addScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        addScript.async = true
-        document.body.appendChild(addScript)
 
-        // @ts-ignore
-        window.googleTranslateElementInit = () => {
+        // Function to initialize Google Translate
+        const initGoogleTranslate = () => {
             // @ts-ignore
-            new window.google.translate.TranslateElement(
-                {
-                    pageLanguage: "en",
-                    includedLanguages: "en,hi,te,ta,kn,ml",
-                    autoDisplay: false
-                },
-                "google_translate_element"
-            )
+            if (window.google && window.google.translate) {
+                // @ts-ignore
+                new window.google.translate.TranslateElement(
+                    {
+                        pageLanguage: "en",
+                        includedLanguages: "en,hi,te,ta,kn,ml,gu,mr,bn,or",
+                        autoDisplay: false,
+                        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+                    },
+                    "google_translate_element"
+                )
+            }
+        }
+
+        // Assign to global for the script callback
+        // @ts-ignore
+        window.googleTranslateElementInit = initGoogleTranslate
+
+        const scriptId = "google-translate-script"
+        if (!document.getElementById(scriptId)) {
+            const addScript = document.createElement("script")
+            addScript.id = scriptId
+            addScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            addScript.async = true
+            document.body.appendChild(addScript)
+        } else {
+            // Script already loaded, manual init
+            initGoogleTranslate()
         }
     }, [])
 
